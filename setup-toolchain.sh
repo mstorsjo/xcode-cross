@@ -89,9 +89,4 @@ ln -sf clang c++
 ln -sf clang gcc
 ln -sf clang g++
 
-cat<<EOF > dsymutil
-#!/bin/sh
-export PATH=$CCTOOLS/bin:\$PATH
-$CLANG/bin/llvm-dsymutil "\$@"
-EOF
-chmod a+x dsymutil
+ln -s $CLANG/bin/llvm-dsymutil dsymutil
