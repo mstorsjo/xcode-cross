@@ -90,3 +90,7 @@ ln -sf clang gcc
 ln -sf clang g++
 
 ln -s $CLANG/bin/llvm-dsymutil dsymutil
+
+cd ../lib
+mkdir -p $CLANG/lib/arc
+ln -s $(pwd)/arc/libarclite_macosx.a $CLANG/lib/arc

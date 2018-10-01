@@ -78,8 +78,6 @@ RUN set -x \
 
 ENV DEVELOPER_DIR=/opt/Xcode.app
 
-RUN mkdir -p /opt/clang/lib/arc && ln -s $DEVELOPER_DIR/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/arc/libarclite_macosx.a /opt/clang/lib/arc
-
 RUN set -x \
   && ARCHS="i386 x86_64 armv7 arm64" \
   && mkdir -p /opt/xcode-cross/bin \
