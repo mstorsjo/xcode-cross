@@ -78,21 +78,7 @@ RUN set -x \
 
 ENV DEVELOPER_DIR=/opt/Xcode.app
 
-RUN set -x \
-  && ARCHS="i386 x86_64 armv7 arm64" \
-  && mkdir -p /opt/xcode-cross/bin \
-  && for tool in clang clang++ cc gcc c++ g++; do \
-       for arch in $ARCHS; do \
-         ln -s $DEVELOPER_DIR/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/$tool /opt/xcode-cross/bin/$arch-apple-darwin-$tool; \
-       done; \
-       ln -s $DEVELOPER_DIR/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/$tool /opt/xcode-cross/bin/apple-darwin-$tool; \
-     done \
-  && for tool in ar as ld nm ranlib strings strip; do \
-       for arch in $ARCHS; do \
-         ln -s /opt/cctools/bin/$tool /opt/xcode-cross/bin/$arch-apple-darwin-$tool; \
-       done; \
-       ln -s /opt/cctools/bin/$tool /opt/xcode-cross/bin/apple-darwin-$tool; \
-     done
+RUN /opt/xcode-cross/setup-symlinks.sh /opt/xcode-cross $DEVELOPER_DIR /opt/cctools
 
 # Add the Xcode toolchain to the path, but after the normal path directories,
 # to allow using the host compiler as usual (for cases that require compilation
