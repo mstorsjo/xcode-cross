@@ -1,0 +1,23 @@
+FROM xcode-cross
+
+RUN apt-get update && \
+    apt-get install -y python3 ninja-build
+
+WORKDIR /opt
+RUN git clone git://github.com/mesonbuild/meson && \
+    cd meson && \
+    git checkout ef14681fa02fd371891e0d9013f5b631aa619400
+
+ENV PATH=/opt/meson:$PATH
+
+WORKDIR /build
+RUN git clone http://code.videolan.org/videolan/dav1d.git && \
+    cd dav1d && \
+    git checkout 2982ef9279c58c69e19c54b00177cd17a940491b
+
+COPY cross-ios-*.txt dav1d/
+RUN cd dav1d && \
+    mkdir build-ios-arm64 && \
+    cd build-ios-arm64 && \
+    meson.py --cross-file=../cross-ios-arm64.txt .. && \
+    ninja

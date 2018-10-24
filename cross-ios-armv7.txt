@@ -1,0 +1,15 @@
+[binaries]
+c = 'apple-darwin-clang'
+cpp = 'apple-darwin-clang++'
+ar = 'apple-darwin-ar'
+strip = 'apple-darwin-strip'
+
+[properties]
+c_args = ['-miphoneos-version-min=8.0', '-arch', 'armv7', '-isysroot', '/opt/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk']
+c_link_args = ['-miphoneos-version-min=8.0', '-arch', 'armv7', '-isysroot', '/opt/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk']
+
+[host_machine]
+system = 'darwin'
+cpu_family = 'arm'
+cpu = 'armv7'
+endian = 'little'
