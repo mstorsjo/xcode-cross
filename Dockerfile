@@ -23,8 +23,6 @@ RUN set -x \
   && tar --warning=no-unknown-keyword -Jxf $(basename $XCODE_URL) \
   && rm $(basename $XCODE_URL)
 
-ARG CORES=2
-
 RUN set -x \
   && git clone https://github.com/facebook/xcbuild.git xcbuild-src \
   && cd xcbuild-src \
@@ -35,8 +33,8 @@ RUN set -x \
   && mkdir xcbuild-build \
   && cd xcbuild-build \
   && cmake -DCMAKE_INSTALL_PREFIX=/opt/xcbuild -DCMAKE_BUILD_TYPE=Release ../xcbuild-src \
-  && make -j$CORES \
-  && make -j$CORES install \
+  && make -j$(nproc) \
+  && make -j$(nproc) install \
   && cd .. \
   && rm -rf xcbuild-build xcbuild-src
 
@@ -48,8 +46,8 @@ RUN set -x \
   && mkdir apple-libtapi-build \
   && cd apple-libtapi-build \
   && cmake -DCMAKE_INSTALL_PREFIX=/opt/cctools -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF ../apple-libtapi/src/apple-llvm/src \
-  && make -j$CORES libtapi \
-  && make -j$CORES install-libtapi \
+  && make -j$(nproc) libtapi \
+  && make -j$(nproc) install-libtapi \
   && mkdir -p /opt/cctools/include \
   && cp -a ../apple-libtapi/src/apple-llvm/src/projects/libtapi/include/tapi /opt/cctools/include \
   && cp projects/libtapi/include/tapi/Version.inc /opt/cctools/include/tapi \
@@ -64,8 +62,8 @@ RUN set -x \
   && git checkout 22ebe727a5cdc21059d45313cf52b4882157f6f0 \
   && cd cctools \
   && CFLAGS="-D_FORTIFY_SOURCE=0 -O3" ./configure --prefix=/opt/cctools --with-libtapi=/opt/cctools \
-  && make -j$CORES \
-  && make -j$CORES install \
+  && make -j$(nproc) \
+  && make -j$(nproc) install \
   && cd ../.. \
   && rm -rf cctools-port
 
