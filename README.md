@@ -23,9 +23,7 @@ with this cross compilation setup, since very little of the bundle
 actually is used:
 
     cp -a /Applications/Xcode.app .
-    cd Xcode.app
-    ../strip-xcode.sh
-    cd ..
+    ./strip-xcode.sh Xcode.app
     tar -Jcvf xcode.tar.xz Xcode.app
     rm -rf Xcode.app
 

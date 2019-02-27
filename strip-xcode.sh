@@ -2,6 +2,10 @@
 
 set -e
 
+if [ -n "$1" ]; then
+	cd "$1"
+fi
+
 cd Contents
 
 mkdir PlugIns-new
