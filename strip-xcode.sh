@@ -42,7 +42,7 @@ rm -rf DeviceSupport usr _CodeSignature Developer/Library/CoreSimulator
 cd ..
 
 cd iPhoneSimulator.platform
-rm -rf Developer/Library/CoreSimulator _CodeSignature
+rm -rf Developer/Library/CoreSimulator Developer/Library/Frameworks Developer/Library/PrivateFrameworks _CodeSignature
 cd Developer/SDKs/iPhoneSimulator.sdk
 rm -rf usr/share usr/libexec Library Developer Applications
 # On Xcode 9.x and newer, usr/lib contains tbd files for the libraries, and
