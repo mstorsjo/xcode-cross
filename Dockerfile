@@ -16,13 +16,6 @@ RUN set -x \
   && mv bin-new bin \
   && rm -rf lib/*.a lib/*.so lib/*.so.* lib/clang/5.0.0/lib/linux
 
-ARG XCODE_URL
-
-RUN set -x \
-  && curl -LO $XCODE_URL \
-  && tar --warning=no-unknown-keyword -Jxf $(basename $XCODE_URL) \
-  && rm $(basename $XCODE_URL)
-
 RUN set -x \
   && git clone https://github.com/facebook/xcbuild.git xcbuild-src \
   && cd xcbuild-src \
@@ -69,6 +62,13 @@ RUN set -x \
 
 ARG XCODE_CROSS_SRC_DIR=.
 ADD $XCODE_CROSS_SRC_DIR /opt/xcode-cross/
+
+ARG XCODE_URL
+
+RUN set -x \
+  && curl -LO $XCODE_URL \
+  && tar --warning=no-unknown-keyword -Jxf $(basename $XCODE_URL) \
+  && rm $(basename $XCODE_URL)
 
 RUN set -x \
   && cd Xcode.app \
