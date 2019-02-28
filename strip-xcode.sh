@@ -44,7 +44,14 @@ cd ..
 cd iPhoneSimulator.platform
 rm -rf Developer/Library/CoreSimulator _CodeSignature
 cd Developer/SDKs/iPhoneSimulator.sdk
-rm -rf usr/share usr/lib usr/libexec Library Developer Applications
+rm -rf usr/share usr/libexec Library Developer Applications
+# On Xcode 9.x and newer, usr/lib contains tbd files for the libraries, and
+# linking to them for simulator builds succeeds. On Xcode 8.x and older,
+# the usr/lib dir contains large dylib files, and linking against them doesn't
+# succeed anyway (it's missing /usr/lib/system/libsystem_kernel.dylib).
+# Thus remove the large files from older SDKs, while keeping enough for
+# linking to succeed on newer SDks.
+rm -rf usr/lib/system usr/lib/*.dylib
 if [ ! -e System/Library/Frameworks/Foundation.framework/Foundation.tbd ]; then
 	# Xcode 7.x and 8.x has got full frameworks for the simulator here,
 	# replace them with thin frameworks with TBD files for the target.
