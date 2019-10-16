@@ -23,6 +23,7 @@ rm -rf bin
 mkdir bin
 # Fill in usr/bin later with wrappers/scripts
 rm -rf lib/*swift* lib/*.dylib lib/*.framework
+rm -rf metal
 cd ../../..
 mkdir Toolchains-new
 mv Toolchains/XcodeDefault.xctoolchain Toolchains-new
