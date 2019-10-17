@@ -41,7 +41,7 @@ for sdk in iPhone Watch AppleTV; do
 	OS=${sdk}OS
 	SIM=${sdk}Simulator
 	cd $OS.platform
-	rm -rf DeviceSupport usr _CodeSignature Developer/Library/CoreSimulator
+	rm -rf DeviceSupport usr _CodeSignature Developer/Library/CoreSimulator Library/Developer/CoreSimulator
 	cd ..
 
 	cd $SIM.platform
