@@ -39,25 +39,26 @@ RUN set -x \
 RUN set -x \
   && git clone https://github.com/tpoechtrager/apple-libtapi.git \
   && cd apple-libtapi \
-  && git checkout 84c0c83c435e3d916673b1aa48905047e8d422d0 \
+  && git checkout 3efb201881e7a76a21e0554906cf306432539cef \
+  && ln -s ../../clang/include/clang src/llvm/projects/libtapi/include \
   && cd .. \
   && mkdir apple-libtapi-build \
   && cd apple-libtapi-build \
-  && cmake -DCMAKE_INSTALL_PREFIX=/opt/cctools -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF ../apple-libtapi/src/apple-llvm/src \
+  && cmake -DCMAKE_INSTALL_PREFIX=/opt/cctools -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF ../apple-libtapi/src/llvm \
+  && make -j$(nproc) clang-tablegen-targets \
+  && ln -s ../../clang/include/clang projects/libtapi/include \
   && make -j$(nproc) libtapi \
   && make -j$(nproc) install-libtapi install-tapi-headers \
   && cd .. \
   && rm -rf apple-libtapi apple-libtapi-build
 
-# -D_FORTIFY_SOURCE=0, since cctools/misc/libtool.c:2070 gets an incorrect
-# guard. Alternatively, the code could be changed to use snprintf instead.
 RUN set -x \
   && git clone https://github.com/tpoechtrager/cctools-port.git \
   && cd cctools-port \
-  && git checkout 22ebe727a5cdc21059d45313cf52b4882157f6f0 \
+  && git checkout 3764b223c011574971ee3ae09ce968ba5dc2f00f \
   && cd cctools \
-  && CFLAGS="-D_FORTIFY_SOURCE=0 -O3" ./configure --prefix=/opt/cctools --with-libtapi=/opt/cctools \
-  && make -j$(nproc) \
+  && PATH=/opt/clang/bin:$PATH ./configure --prefix=/opt/cctools --with-libtapi=/opt/cctools \
+  && PATH=/opt/clang/bin:$PATH make -j$(nproc) \
   && make -j$(nproc) install \
   && cd ../.. \
   && rm -rf cctools-port
