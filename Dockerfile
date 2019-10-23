@@ -70,6 +70,15 @@ RUN set -x \
   && tar --warning=no-unknown-keyword -Jxf $(basename $XCODE_URL) \
   && rm $(basename $XCODE_URL)
 
+# Xcode 10.3 has newer cctools where libtool has got a new option -D, but
+# we're using older cctools. The spec file indicates that this is supported
+# since cctools 927, but xcbuild doesn't use this field.
+# Edit the section for the LIBTOOL_DETERMINISTIC_MODE option, switching it
+# from DefaultValue = YES to DefaultValue = NO.
+RUN FILE=Xcode.app/Contents/PlugIns/Xcode3Core.ideplugin/Contents/SharedSupport/Developer/Library/Xcode/Plug-ins/CoreBuildTasks.xcplugin/Contents/Resources/Libtool.xcspec \
+  && if [ -f $FILE ]; then \
+  sed 's/YES/NO/' < $FILE > $FILE.tmp \
+  && mv $FILE.tmp $FILE; fi
 
 ARG XCODE_CROSS_SRC_DIR=.
 ADD $XCODE_CROSS_SRC_DIR/setup-toolchain.sh $XCODE_CROSS_SRC_DIR/setup-symlinks.sh /opt/xcode-cross/
