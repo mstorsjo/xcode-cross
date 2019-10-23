@@ -62,15 +62,16 @@ RUN set -x \
   && cd ../.. \
   && rm -rf cctools-port
 
-ARG XCODE_CROSS_SRC_DIR=.
-ADD $XCODE_CROSS_SRC_DIR /opt/xcode-cross/
-
 ARG XCODE_URL
 
 RUN set -x \
   && curl -LO $XCODE_URL \
   && tar --warning=no-unknown-keyword -Jxf $(basename $XCODE_URL) \
   && rm $(basename $XCODE_URL)
+
+
+ARG XCODE_CROSS_SRC_DIR=.
+ADD $XCODE_CROSS_SRC_DIR/setup-toolchain.sh $XCODE_CROSS_SRC_DIR/setup-symlinks.sh /opt/xcode-cross/
 
 RUN set -x \
   && cd Xcode.app \
