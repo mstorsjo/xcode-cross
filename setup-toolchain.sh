@@ -89,7 +89,7 @@ ln -sf clang c++
 ln -sf clang gcc
 ln -sf clang g++
 
-ln -s $CLANG/bin/llvm-dsymutil dsymutil
+ln -s $CLANG/bin/dsymutil .
 ln -s $CLANG/bin/llvm-nm nm
 
 cd ../lib
