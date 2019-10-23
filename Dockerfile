@@ -1,6 +1,11 @@
 FROM ubuntu:18.04
 
-RUN apt-get update && apt-get install -y doxygen zip build-essential curl git cmake zlib1g-dev libpng-dev libxml2-dev gobjc python vim-tiny
+RUN apt-get update -qq \
+  && apt-get install -qqy --no-install-recommends doxygen zip build-essential \
+  curl git cmake zlib1g-dev libpng-dev libxml2-dev gobjc python vim-tiny \
+  ca-certificates \
+  && apt-get clean -y \
+  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt
 
