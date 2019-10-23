@@ -58,6 +58,8 @@ while [ \$# -gt 0 ]; do
 	else
 		if [ "\$a" = "-isysroot" ]; then
 			SYSROOT_SET=1
+		elif [ "\$a" = "-target" ]; then
+			TARGET_SET=1
 		fi
 		ARGS+=("\$a")
 		shift
