@@ -3,7 +3,7 @@ FROM ubuntu:18.04
 RUN apt-get update -qq \
   && apt-get install -qqy --no-install-recommends doxygen zip build-essential \
   curl git cmake zlib1g-dev libpng-dev libxml2-dev gobjc python vim-tiny \
-  ca-certificates \
+  ca-certificates ninja-build \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
@@ -30,9 +30,9 @@ RUN set -x \
   && cd .. \
   && mkdir xcbuild-build \
   && cd xcbuild-build \
-  && cmake -DCMAKE_INSTALL_PREFIX=/opt/xcbuild -DCMAKE_BUILD_TYPE=Release ../xcbuild-src \
-  && make -j$(nproc) \
-  && make -j$(nproc) install \
+  && cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/opt/xcbuild -DCMAKE_BUILD_TYPE=Release ../xcbuild-src \
+  && ninja \
+  && ninja install \
   && cd .. \
   && rm -rf xcbuild-build xcbuild-src
 
@@ -44,11 +44,11 @@ RUN set -x \
   && cd .. \
   && mkdir apple-libtapi-build \
   && cd apple-libtapi-build \
-  && cmake -DCMAKE_INSTALL_PREFIX=/opt/cctools -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF ../apple-libtapi/src/llvm \
-  && make -j$(nproc) clang-tablegen-targets \
+  && cmake -G Ninja -DCMAKE_INSTALL_PREFIX=/opt/cctools -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF ../apple-libtapi/src/llvm \
   && ln -s ../../clang/include/clang projects/libtapi/include \
-  && make -j$(nproc) libtapi \
-  && make -j$(nproc) install-libtapi install-tapi-headers \
+  && ninja clang-tablegen-targets \
+  && ninja libtapi \
+  && ninja install-libtapi install-tapi-headers \
   && cd .. \
   && rm -rf apple-libtapi apple-libtapi-build
 
