@@ -93,4 +93,6 @@ ln -s $CLANG/bin/llvm-dsymutil dsymutil
 
 cd ../lib
 mkdir -p $CLANG/lib/arc
-ln -s $(pwd)/arc/libarclite_macosx.a $CLANG/lib/arc
+for i in $(pwd)/arc/libarclite*.a; do
+	ln -s $i $CLANG/lib/arc
+done
