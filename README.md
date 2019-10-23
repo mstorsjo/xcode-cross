@@ -19,8 +19,7 @@ of the Apple provided clang sources.
 
 This requires an original Xcode.app bundle (which can't be redistributed
 freely). It has been tested with and should work with Xcode versions 7,
-8 and 9 up to 9.2, but the 9.3 and 9.4 version doesn't work (requiring a
-newer version of libtapi, that hasn't been opensourced by Apple yet).
+8, 9 and 10, up to 10.1.
 Older versions of Xcode can be downloaded from [Apple](https://developer.apple.com/download/more/).
 
 The Xcode bundle can be stripped down to more manageable sizes for use
