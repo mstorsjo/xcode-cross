@@ -9,6 +9,11 @@ for providing the basic tools for cross compilation, together with
 [xcbuild](https://github.com/facebook/xcbuild) for building xcode project
 files, wrapping it up into a easy to use and reproducible Dockerfile.
 
+Not all build tools used by Xcode project files are available; some
+are stubbed out (like `ibtool`), making it usable as a CI tool for
+testing compilation, while other Xcode project file features makes
+the build fail altogether.
+
 This setup currently uses a vanilla LLVM/Clang release instead
 of the Apple provided clang sources.
 
