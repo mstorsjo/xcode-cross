@@ -69,7 +69,7 @@ fi
 if [ -z "\$SYSROOT_SET" ]; then
 	# Is there a better way to find the default sdk?
 	SDKS=\$DEVELOPER_DIR/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
-	SDK=\$SDKS/\$(ls \$SDKS | head -1)
+	SDK=\$SDKS/\$(ls \$SDKS | grep MacOSX | head -1)
 	ARGS+=(-isysroot \$SDK)
 fi
 export PATH=$CCTOOLS/bin:\$PATH
