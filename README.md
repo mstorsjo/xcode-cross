@@ -22,6 +22,10 @@ freely). It has been tested with and should work with Xcode versions 7,
 8, 9 and 10.
 Older versions of Xcode can be downloaded from [Apple](https://developer.apple.com/download/more/).
 
+Using an Xcode 11 bundle works somewhat; building with generic build
+systems works fine, but there's a few known issues if building Xcode
+project files with xcbuild, for other than the simplest project files.
+
 The Xcode bundle can be stripped down to more manageable sizes for use
 with this cross compilation setup, since very little of the bundle
 actually is used:
