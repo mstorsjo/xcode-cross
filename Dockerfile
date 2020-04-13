@@ -55,7 +55,7 @@ RUN set -x \
 RUN set -x \
   && git clone https://github.com/tpoechtrager/cctools-port.git \
   && cd cctools-port \
-  && git checkout 8239a5211bcf07d6b9d359782e1a889ec1d7cce5 \
+  && git checkout 8d34d0fbb0037518383e438f40588ef5a3b0c8bf \
   && cd cctools \
   && PATH=/opt/clang/bin:$PATH ./configure --prefix=/opt/cctools --with-libtapi=/opt/cctools \
   && PATH=/opt/clang/bin:$PATH make -j$(nproc) \
