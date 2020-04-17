@@ -96,6 +96,7 @@ ln -s $CLANG/bin/llvm-nm nm
 
 cd ../lib
 mkdir -p $CLANG/lib/arc
+ln -s $(pwd)/clang/*.*.*/lib/darwin $CLANG/lib/clang/*.*.*/lib
 for i in $(pwd)/arc/libarclite*.a; do
 	ln -s $i $CLANG/lib/arc
 done
