@@ -33,6 +33,8 @@ cd ../../Toolchains/XcodeDefault.xctoolchain/usr/bin
 
 ln -sf $CCTOOLS/bin/libtool .
 ln -sf $CCTOOLS/bin/lipo .
+ln -sf $CCTOOLS/bin/ar .
+ln -sf $CCTOOLS/bin/ranlib .
 cat<<EOF > clang
 #!/bin/bash
 ARGS=()
