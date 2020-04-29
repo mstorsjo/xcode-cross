@@ -55,7 +55,7 @@ while [ \$# -gt 0 ]; do
 	a=\$1
 	if [ "\$a" = "-arch" ]; then
 		shift
-		ARGS+=(-target \$1-apple-darwin16)
+		ARGS+=(-target \$1-apple-darwin16 -arch \$1)
 		TARGET_SET=1
 		shift
 	else
