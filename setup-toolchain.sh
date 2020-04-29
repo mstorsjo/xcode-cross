@@ -31,11 +31,14 @@ ln -sf /bin/true ibtool
 
 cd ../../Toolchains/XcodeDefault.xctoolchain/usr/bin
 
-ln -sf $CCTOOLS/bin/libtool .
-ln -sf $CCTOOLS/bin/lipo .
-ln -sf $CCTOOLS/bin/ar .
-ln -sf $CCTOOLS/bin/ranlib .
-ln -sf $CCTOOLS/bin/as .
+TOOLS_SYMLINK="ar as cmpdylib ctf_insert dyldinfo install_name_tool ld libtool"
+TOOLS_SYMLINK="$TOOLS_SYMLINK lipo nmedit pagestuff ranlib segedit size string"
+TOOLS_SYMLINK="$TOOLS_SYMLINK strip unwinddump vtool"
+
+for tool in $TOOLS_SYMLINK; do
+	ln -sf $CCTOOLS/bin/$tool .
+done
+
 cat<<EOF > clang
 #!/bin/bash
 ARGS=()
