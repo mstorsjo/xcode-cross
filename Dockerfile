@@ -3,23 +3,23 @@ FROM ubuntu:20.04
 RUN apt-get update -qq \
   && DEBIAN_FRONTEND="noninteractive" apt-get install -qqy --no-install-recommends \
   doxygen zip build-essential curl git cmake zlib1g-dev libpng-dev libxml2-dev \
-  gobjc python vim-tiny ca-certificates ninja-build libtinfo5 \
+  gobjc python vim-tiny ca-certificates ninja-build \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt
 
 RUN set -x \
-  && curl -LO http://releases.llvm.org/8.0.0/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz \
-  && tar -Jxf clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz \
-  && rm clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz \
-  && mv clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-18.04 clang \
+  && curl -LO https://github.com/llvm/llvm-project/releases/download/llvmorg-11.0.0/clang+llvm-11.0.0-x86_64-linux-gnu-ubuntu-20.04.tar.xz \
+  && tar -Jxf clang+llvm-11.0.0-x86_64-linux-gnu-ubuntu-20.04.tar.xz \
+  && rm clang+llvm-11.0.0-x86_64-linux-gnu-ubuntu-20.04.tar.xz \
+  && mv clang+llvm-11.0.0-x86_64-linux-gnu-ubuntu-20.04 clang \
   && cd clang \
   && mkdir bin-new \
-  && mv bin/clang-8 bin/clang bin/clang++ bin/dsymutil bin/llvm-nm bin-new \
+  && mv bin/clang-11 bin/clang bin/clang++ bin/dsymutil bin/llvm-nm bin-new \
   && rm -rf bin \
   && mv bin-new bin \
-  && rm -rf lib/*.a lib/*.so lib/*.so.* lib/clang/8.0.0/lib/linux
+  && rm -rf lib/*.a lib/*.so lib/*.so.* lib/clang/11.0.0/lib/linux
 
 RUN set -x \
   && git clone https://github.com/facebook/xcbuild.git xcbuild-src \
