@@ -40,7 +40,7 @@ RUN set -x \
 RUN set -x \
   && git clone https://github.com/tpoechtrager/apple-libtapi.git \
   && cd apple-libtapi \
-  && git checkout 3efb201881e7a76a21e0554906cf306432539cef \
+  && git checkout 664b8414f89612f2dfd35a9b679c345aa5389026 \
   && ln -s ../../clang/include/clang src/llvm/projects/libtapi/include \
   && cd .. \
   && mkdir apple-libtapi-build \
@@ -56,7 +56,7 @@ RUN set -x \
 RUN set -x \
   && git clone https://github.com/tpoechtrager/cctools-port.git \
   && cd cctools-port \
-  && git checkout 8d34d0fbb0037518383e438f40588ef5a3b0c8bf \
+  && git checkout 30518813875aed656aa7f18b6d485feee25f8f87 \
   && cd cctools \
   && PATH=/opt/clang/bin:$PATH ./configure --prefix=/opt/cctools --with-libtapi=/opt/cctools \
   && PATH=/opt/clang/bin:$PATH make -j$(nproc) \
