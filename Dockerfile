@@ -24,7 +24,7 @@ RUN set -x \
 RUN set -x \
   && git clone https://github.com/facebook/xcbuild.git xcbuild-src \
   && cd xcbuild-src \
-  && git checkout 57fe28235a72318b8266a1c4b9d4d0f10e2ff876 \
+  && git checkout dbaee552d2f13640773eb1ad3c79c0d2aca7229c \
   && git submodule sync \
   && git submodule update --init \
   && sed -i s/-Werror// CMakeLists.txt \
