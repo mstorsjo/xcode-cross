@@ -1,9 +1,9 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 RUN apt-get update -qq \
-  && apt-get install -qqy --no-install-recommends doxygen zip build-essential \
-  curl git cmake zlib1g-dev libpng-dev libxml2-dev gobjc python vim-tiny \
-  ca-certificates ninja-build \
+  && DEBIAN_FRONTEND="noninteractive" apt-get install -qqy --no-install-recommends \
+  doxygen zip build-essential curl git cmake zlib1g-dev libpng-dev libxml2-dev \
+  gobjc python vim-tiny ca-certificates ninja-build libtinfo5 \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
@@ -27,6 +27,7 @@ RUN set -x \
   && git checkout 57fe28235a72318b8266a1c4b9d4d0f10e2ff876 \
   && git submodule sync \
   && git submodule update --init \
+  && sed -i s/-Werror// CMakeLists.txt \
   && cd .. \
   && mkdir xcbuild-build \
   && cd xcbuild-build \
