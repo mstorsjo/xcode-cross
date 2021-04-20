@@ -24,3 +24,4 @@ for tool in ar as ld ranlib strings strip; do
 	done
 	ln -sf $CCTOOLS/bin/$tool $PREFIX/bin/apple-darwin-$tool
 done
+ln -sf /opt/xcbuild/usr/bin/xcbuild $PREFIX/xcodebuild
