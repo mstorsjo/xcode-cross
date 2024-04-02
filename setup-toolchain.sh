@@ -82,10 +82,9 @@ if [ -z "\$SYSROOT_SET" ]; then
 fi
 export PATH=$CCTOOLS/bin:\$PATH
 if [ "\$TOOL" = "clang++" ] || [ "\$TOOL" = "c++" ] || [ "\$TOOL" = "g++" ]; then
-	EXE=$CLANG/bin/clang++
-else
-	EXE=$CLANG/bin/clang
+	ARGS+=(--driver-mode=g++)
 fi
+EXE=\$(dirname \$(readlink -f \$0))/clang-exe
 \$EXE "\${ARGS[@]}"
 EOF
 chmod a+x clang
@@ -99,6 +98,7 @@ ln -sf clang g++
 
 ln -s $CLANG/bin/dsymutil .
 ln -s $CLANG/bin/llvm-nm nm
+ln -s $CLANG/bin/clang clang-exe
 
 cd ../lib
 mkdir -p $CLANG/lib/arc

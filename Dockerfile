@@ -19,11 +19,7 @@ RUN set -x \
   && mv bin/clang-11 bin/clang bin/clang++ bin/dsymutil bin/llvm-nm bin-new \
   && rm -rf bin \
   && mv bin-new bin \
-  && mkdir include-new \
-  && mv include/c++ include-new \
-  && rm -rf include \
-  && mv include-new include \
-  && rm -rf lib/*.a lib/*.so lib/*.so.* lib/clang/11.0.0/lib/linux
+  && rm -rf lib/*.a lib/*.so lib/*.so.* lib/clang/11.0.0/lib/linux include
 
 RUN set -x \
   && git clone https://github.com/facebook/xcbuild.git xcbuild-src \
