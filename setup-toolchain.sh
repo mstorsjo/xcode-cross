@@ -84,6 +84,7 @@ export PATH=$CCTOOLS/bin:\$PATH
 if [ "\$TOOL" = "clang++" ] || [ "\$TOOL" = "c++" ] || [ "\$TOOL" = "g++" ]; then
 	ARGS+=(--driver-mode=g++)
 fi
+ARGS+=(-no-canonical-prefixes)
 EXE=\$(dirname \$(readlink -f \$0))/clang-exe
 \$EXE "\${ARGS[@]}"
 EOF
@@ -100,9 +101,15 @@ ln -s $CLANG/bin/dsymutil .
 ln -s $CLANG/bin/llvm-nm nm
 ln -s $CLANG/bin/clang clang-exe
 
-cd ../lib
-mkdir -p $CLANG/lib/arc
-ln -s $(pwd)/clang/*.*.*/lib/darwin $CLANG/lib/clang/*.*.*/lib
-for i in $(pwd)/arc/libarclite*.a; do
-	ln -s $i $CLANG/lib/arc
-done
+cd ../lib/clang
+# Rename the original bundled clang resource directory to "orig", to avoid
+# potential version number clashes.
+mv * orig
+# Fetch the version number of the resource directory of the clang we're
+# using.
+VER=$(cd $CLANG/lib/clang && ls)
+# Link in the clang resource directory from the external installation into
+# this directory.
+ln -s $CLANG/lib/clang/$VER .
+# Provide the original libraries in the external clang's resource directory.
+ln -s $(pwd)/orig/lib/darwin $VER/lib
