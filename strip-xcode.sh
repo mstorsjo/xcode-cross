@@ -33,7 +33,7 @@ mv Toolchains-new Toolchains
 cd Platforms
 cd MacOSX.platform
 rm -rf usr _CodeSignature
-cd Developer/SDKs/MacOSX10.*sdk
+cd Developer/SDKs/MacOSX*.*.*sdk
 rm -rf usr/share
 cd ../../../..
 
