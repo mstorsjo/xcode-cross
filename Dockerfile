@@ -88,6 +88,8 @@ ENV DEVELOPER_DIR=$BASE/Xcode.app
 
 RUN $BASE/setup-symlinks.sh $BASE $DEVELOPER_DIR $BASE/cctools
 
+RUN rm $BASE/setup-symlinks.sh $BASE/setup-toolchain.sh
+
 # Add the Xcode toolchain to the path, but after the normal path directories,
 # to allow using the host compiler as usual (for cases that require compilation
 # both for host and target at the same time).
