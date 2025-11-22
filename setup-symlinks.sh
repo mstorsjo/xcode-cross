@@ -24,3 +24,12 @@ for tool in ar as ld ranlib strings strip; do
 	done
 	ln -sf $CCTOOLS/bin/$tool $PREFIX/bin/apple-darwin-$tool
 done
+
+cat<<EOF > "$PREFIX/env.sh"
+#!/bin/sh
+
+export DEVELOPER_DIR="$DEVELOPER_DIR"
+export LD_LIBRARY_PATH="$CCTOOLS/lib"
+export PATH="$PREFIX/bin:\$PATH:\$DEVELOPER_DIR/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:$PREFIX/xcbuild/usr/bin:$CCTOOLS/bin"
+EOF
+chmod a+x "$PREFIX/env.sh"
