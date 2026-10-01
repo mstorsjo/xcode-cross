@@ -12,8 +12,8 @@ This setup currently uses a vanilla LLVM/Clang release instead
 of the Apple provided clang sources.
 
 This requires an original Xcode.app bundle (which can't be redistributed
-freely). It has been tested with and should work with Xcode versions 7,
-8, 9 and 10.
+freely). It has been tested with and should work with Xcode versions 11
+and newer.
 Older versions of Xcode can be downloaded from [Apple](https://developer.apple.com/download/more/).
 
 The Xcode bundle can be stripped down to more manageable sizes for use
