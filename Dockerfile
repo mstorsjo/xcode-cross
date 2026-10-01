@@ -26,22 +26,6 @@ RUN set -x \
   && rm -rf lib/*.a lib/*.so lib/*.so.* lib/clang/11.0.0/lib/linux include
 
 RUN set -x \
-  && git clone https://github.com/facebook/xcbuild.git xcbuild-src \
-  && cd xcbuild-src \
-  && git checkout dbaee552d2f13640773eb1ad3c79c0d2aca7229c \
-  && git submodule sync \
-  && git submodule update --init \
-  && sed -i s/-Werror// CMakeLists.txt \
-  && cd .. \
-  && mkdir xcbuild-build \
-  && cd xcbuild-build \
-  && cmake -G Ninja -DCMAKE_INSTALL_PREFIX=$BASE/xcbuild -DCMAKE_BUILD_TYPE=Release ../xcbuild-src \
-  && ninja \
-  && ninja install \
-  && cd .. \
-  && rm -rf xcbuild-build xcbuild-src
-
-RUN set -x \
   && git clone https://github.com/tpoechtrager/apple-libtapi.git \
   && cd apple-libtapi \
   && git checkout 664b8414f89612f2dfd35a9b679c345aa5389026 \
@@ -93,4 +77,4 @@ RUN rm $BASE/setup-symlinks.sh $BASE/setup-toolchain.sh
 # Add the Xcode toolchain to the path, but after the normal path directories,
 # to allow using the host compiler as usual (for cases that require compilation
 # both for host and target at the same time).
-ENV PATH=$BASE/bin:$PATH:$DEVELOPER_DIR/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:$BASE/xcbuild/usr/bin:$BASE/cctools/bin
+ENV PATH=$BASE/bin:$PATH:$DEVELOPER_DIR/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:$BASE/cctools/bin

@@ -46,7 +46,7 @@ else
 fi
 export DEVELOPER_DIR="\$XCODE_CROSS_BASE/$DEVELOPER_DIR_REL"
 export LD_LIBRARY_PATH="\$XCODE_CROSS_BASE/$CCTOOLS_REL/lib"
-export PATH="\$XCODE_CROSS_BASE/bin:\$PATH:\$DEVELOPER_DIR/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:\$XCODE_CROSS_BASE/xcbuild/usr/bin:\$XCODE_CROSS_BASE/$CCTOOLS_REL/bin"
+export PATH="\$XCODE_CROSS_BASE/bin:\$PATH:\$DEVELOPER_DIR/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:\$XCODE_CROSS_BASE/$CCTOOLS_REL/bin"
 unset XCODE_CROSS_BASE
 EOF
 chmod a+x "$PREFIX/env.sh"
