@@ -8,10 +8,14 @@ fi
 
 cd Contents
 
-mkdir PlugIns-new
-mv PlugIns/Xcode3Core.ideplugin PlugIns/IDEiOSSupportCore.ideplugin PlugIns-new
-rm -rf PlugIns
-mv PlugIns-new PlugIns
+if [ -d PlugIns/Xcode3Core.ideplugin ]; then
+	mkdir PlugIns-new
+	mv PlugIns/Xcode3Core.ideplugin PlugIns/IDEiOSSupportCore.ideplugin PlugIns-new
+	rm -rf PlugIns
+	mv PlugIns-new PlugIns
+else
+	rm -rf PlugIns
+fi
 rm -rf Applications _CodeSignature Frameworks Library MacOS OtherFrameworks Resources SharedFrameworks XPCServices _MASReceipt Info.plist PkgInfo version.plist
 
 cd Developer
