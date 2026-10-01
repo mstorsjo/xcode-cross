@@ -3,7 +3,7 @@ FROM ubuntu:22.04
 RUN apt-get update -qq \
   && DEBIAN_FRONTEND="noninteractive" apt-get install -qqy --no-install-recommends \
   doxygen zip build-essential curl git cmake zlib1g-dev libpng-dev libxml2-dev \
-  gobjc python3 vim-tiny ca-certificates ninja-build libtinfo5 \
+  gobjc python3 vim-tiny ca-certificates ninja-build \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
@@ -14,16 +14,16 @@ WORKDIR /opt
 RUN set -x \
   && mkdir -p $BASE \
   && cd $BASE \
-  && curl -LO https://github.com/llvm/llvm-project/releases/download/llvmorg-13.0.1/clang+llvm-13.0.1-x86_64-linux-gnu-ubuntu-18.04.tar.xz \
-  && tar -Jxf clang+llvm-13.0.1-x86_64-linux-gnu-ubuntu-18.04.tar.xz \
-  && rm clang+llvm-13.0.1-x86_64-linux-gnu-ubuntu-18.04.tar.xz \
-  && mv clang+llvm-13.0.1-x86_64-linux-gnu-ubuntu-18.04 clang \
+  && curl -LO https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.6/clang+llvm-15.0.6-x86_64-linux-gnu-ubuntu-18.04.tar.xz \
+  && tar -Jxf clang+llvm-*.tar.xz \
+  && rm clang+llvm-*.tar.xz \
+  && mv clang+llvm-* clang \
   && cd clang \
   && mkdir bin-new \
-  && mv bin/clang-13 bin/clang bin/clang++ bin/dsymutil bin/llvm-nm bin-new \
+  && mv bin/clang-15 bin/clang bin/clang++ bin/dsymutil bin/llvm-nm bin-new \
   && rm -rf bin \
   && mv bin-new bin \
-  && rm -rf lib/*.a lib/*.so lib/*.so.* lib/clang/13.0.1/lib/linux include
+  && rm -rf lib/*.a lib/*.so lib/*.so.* lib/*-unknown-linux-gnu lib/clang/15*/lib/*linux* include
 
 RUN set -x \
   && git clone https://github.com/tpoechtrager/apple-libtapi.git \
