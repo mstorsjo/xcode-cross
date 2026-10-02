@@ -31,12 +31,17 @@ ln -sf /bin/true ibtool
 
 cd ../../Toolchains/XcodeDefault.xctoolchain/usr/bin
 
+abs2rel() {
+	perl -MFile::Spec -e 'print File::Spec->abs2rel(@ARGV)' "$1" "$2"
+}
+
 TOOLS_SYMLINK="ar as cmpdylib ctf_insert dyldinfo install_name_tool ld libtool"
 TOOLS_SYMLINK="$TOOLS_SYMLINK lipo nmedit pagestuff ranlib segedit size strings"
 TOOLS_SYMLINK="$TOOLS_SYMLINK strip unwinddump vtool"
 
+CCTOOLS_REL="$(abs2rel "$CCTOOLS" .)"
 for tool in $TOOLS_SYMLINK; do
-	ln -sf $CCTOOLS/bin/$tool .
+	ln -sf "$CCTOOLS_REL/bin/$tool" .
 done
 
 cat<<EOF > clang
@@ -84,12 +89,13 @@ if [ -z "\$SYSROOT_SET" ]; then
 	fi
 	ARGS+=(-isysroot \$SDK)
 fi
-export PATH=$CCTOOLS/bin:\$PATH
+BASE="\$(dirname \$(readlink -f "\$0"))"
+export PATH="\$BASE/$CCTOOLS_REL/bin:\$PATH"
 if [ "\$TOOL" = "clang++" ] || [ "\$TOOL" = "c++" ] || [ "\$TOOL" = "g++" ]; then
 	ARGS+=(--driver-mode=g++)
 fi
 ARGS+=(-no-canonical-prefixes)
-EXE=\$(dirname \$(readlink -f \$0))/clang-exe
+EXE="\$BASE/clang-exe"
 \$EXE "\${ARGS[@]}"
 EOF
 chmod a+x clang
@@ -101,9 +107,10 @@ ln -sf clang c++
 ln -sf clang gcc
 ln -sf clang g++
 
-ln -s $CLANG/bin/dsymutil .
-ln -s $CLANG/bin/llvm-nm nm
-ln -s $CLANG/bin/clang clang-exe
+CLANG_REL="$(abs2rel "$CLANG" .)"
+ln -s "$CLANG_REL/bin/dsymutil" .
+ln -s "$CLANG_REL/bin/llvm-nm" nm
+ln -s "$CLANG_REL/bin/clang" clang-exe
 
 cd ../lib/clang
 # If there are symlinks among the clang version directories, e.g. 17.0.0 -> 17,
@@ -119,8 +126,10 @@ mv * orig
 VER=$(cd $CLANG/lib/clang && ls)
 # Link in the clang resource directory from the external installation into
 # this directory.
-ln -s $CLANG/lib/clang/$VER .
+CLANG_REL="$(abs2rel "$CLANG" .)"
+ln -s "$CLANG_REL/lib/clang/$VER" .
 # Ensure the lib directory exists in the compiler's tree
 mkdir -p $CLANG/lib/clang/$VER/lib
 # Provide the original libraries in the external clang's resource directory.
-ln -s $(pwd)/orig/lib/darwin $VER/lib
+CLANG_TO_TOOLCHAIN_LIB_CLANG="$(abs2rel "$(pwd)" "$CLANG/lib/clang/$VER/lib")"
+ln -s "$CLANG_TO_TOOLCHAIN_LIB_CLANG/orig/lib/darwin" "$VER/lib"

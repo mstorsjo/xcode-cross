@@ -10,20 +10,27 @@ PREFIX="$1"
 DEVELOPER_DIR="$2"
 CCTOOLS="$3"
 
+abs2rel() {
+	perl -MFile::Spec -e 'print File::Spec->abs2rel(@ARGV)' "$1" "$2"
+}
+
+CCTOOLS_REL="$(abs2rel "$CCTOOLS" "$PREFIX/bin")"
+
 XCTOOLCHAIN="$DEVELOPER_DIR/Contents/Developer/Toolchains/XcodeDefault.xctoolchain"
+XCTOOLCHAIN_REL="$(abs2rel "$XCTOOLCHAIN" "$PREFIX/bin")"
 ARCHS="i386 x86_64 armv7 arm64"
 mkdir -p $PREFIX/bin
 for tool in clang clang++ cc gcc c++ g++ nm; do
 	for arch in $ARCHS; do
-		ln -sf "$XCTOOLCHAIN/usr/bin/$tool" "$PREFIX/bin/$arch-apple-darwin-$tool"
+		ln -sf "$XCTOOLCHAIN_REL/usr/bin/$tool" "$PREFIX/bin/$arch-apple-darwin-$tool"
 	done
-	ln -sf "$XCTOOLCHAIN/usr/bin/$tool" "$PREFIX/bin/apple-darwin-$tool"
+	ln -sf "$XCTOOLCHAIN_REL/usr/bin/$tool" "$PREFIX/bin/apple-darwin-$tool"
 done
 for tool in ar as ld ranlib strings strip; do
 	for arch in $ARCHS; do
-		ln -sf $CCTOOLS/bin/$tool $PREFIX/bin/$arch-apple-darwin-$tool
+		ln -sf "$CCTOOLS_REL/bin/$tool" "$PREFIX/bin/$arch-apple-darwin-$tool"
 	done
-	ln -sf $CCTOOLS/bin/$tool $PREFIX/bin/apple-darwin-$tool
+	ln -sf "$CCTOOLS_REL/bin/$tool" "$PREFIX/bin/apple-darwin-$tool"
 done
 
 cat<<EOF > "$PREFIX/env.sh"
