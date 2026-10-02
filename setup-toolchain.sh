@@ -102,6 +102,11 @@ ln -s $CLANG/bin/llvm-nm nm
 ln -s $CLANG/bin/clang clang-exe
 
 cd ../lib/clang
+# If there are symlinks among the clang version directories, e.g. 17.0.0 -> 17,
+# remove the symlink so the next step finds only one directory.
+for i in $(find . -maxdepth 1 -type l); do
+	rm $i
+done
 # Rename the original bundled clang resource directory to "orig", to avoid
 # potential version number clashes.
 mv * orig
