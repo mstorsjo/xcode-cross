@@ -28,14 +28,11 @@ RUN set -x \
 RUN set -x \
   && git clone https://github.com/tpoechtrager/apple-libtapi.git \
   && cd apple-libtapi \
-  && git checkout 664b8414f89612f2dfd35a9b679c345aa5389026 \
-  && ln -s ../../clang/include/clang src/llvm/projects/libtapi/include \
+  && git checkout 640b4623929c923c0468143ff2a363a48665fa54 \
   && cd .. \
   && mkdir apple-libtapi-build \
   && cd apple-libtapi-build \
-  && cmake -G Ninja -DCMAKE_INSTALL_PREFIX=$BASE/cctools -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF ../apple-libtapi/src/llvm \
-  && ln -s ../../clang/include/clang projects/libtapi/include \
-  && ninja clang-tablegen-targets \
+  && cmake -G Ninja -DCMAKE_INSTALL_PREFIX=$BASE/cctools -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_PROJECTS="clang;tapi" ../apple-libtapi/src/llvm \
   && ninja libtapi \
   && ninja install-libtapi install-tapi-headers \
   && cd .. \
@@ -44,7 +41,7 @@ RUN set -x \
 RUN set -x \
   && git clone https://github.com/tpoechtrager/cctools-port.git \
   && cd cctools-port \
-  && git checkout f28fb5e9c31efd3d0552afcce2d2c03cae25c1ca \
+  && git checkout e101a6940dcb5988808a16626bc43851f00dc05f \
   && cd cctools \
   && PATH=$BASE/clang/bin:$PATH ./configure --prefix=$BASE/cctools --with-libtapi=$BASE/cctools \
   && PATH=$BASE/clang/bin:$PATH make -j$(nproc) \
