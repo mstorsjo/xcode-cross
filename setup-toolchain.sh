@@ -32,7 +32,7 @@ ln -sf /bin/true ibtool
 cd ../../Toolchains/XcodeDefault.xctoolchain/usr/bin
 
 TOOLS_SYMLINK="ar as cmpdylib ctf_insert dyldinfo install_name_tool ld libtool"
-TOOLS_SYMLINK="$TOOLS_SYMLINK lipo nmedit pagestuff ranlib segedit size string"
+TOOLS_SYMLINK="$TOOLS_SYMLINK lipo nmedit pagestuff ranlib segedit size strings"
 TOOLS_SYMLINK="$TOOLS_SYMLINK strip unwinddump vtool"
 
 for tool in $TOOLS_SYMLINK; do
