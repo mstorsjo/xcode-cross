@@ -14,16 +14,16 @@ WORKDIR /opt
 RUN set -x \
   && mkdir -p $BASE \
   && cd $BASE \
-  && curl -LO https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.6/clang+llvm-15.0.6-x86_64-linux-gnu-ubuntu-18.04.tar.xz \
+  && curl -LO https://github.com/llvm/llvm-project/releases/download/llvmorg-16.0.4/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04.tar.xz \
   && tar -Jxf clang+llvm-*.tar.xz \
   && rm clang+llvm-*.tar.xz \
   && mv clang+llvm-* clang \
   && cd clang \
   && mkdir bin-new \
-  && mv bin/clang-15 bin/clang bin/clang++ bin/dsymutil bin/llvm-nm bin-new \
+  && mv bin/clang-16 bin/clang bin/clang++ bin/dsymutil bin/llvm-nm bin-new \
   && rm -rf bin \
   && mv bin-new bin \
-  && rm -rf lib/*.a lib/*.so lib/*.so.* lib/*-unknown-linux-gnu lib/clang/15*/lib/*linux* include
+  && rm -rf lib/*.a lib/*.so lib/*.so.* lib/*-unknown-linux-gnu lib/clang/16/lib/*linux* include
 
 RUN set -x \
   && git clone https://github.com/tpoechtrager/apple-libtapi.git \
