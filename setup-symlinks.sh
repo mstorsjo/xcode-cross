@@ -39,7 +39,11 @@ DEVELOPER_DIR_REL="$(abs2rel "$DEVELOPER_DIR" "$PREFIX")"
 cat<<EOF > "$PREFIX/env.sh"
 #!/bin/sh
 
-XCODE_CROSS_BASE="$PREFIX"
+if [ -n "\$BASH_SOURCE" ]; then
+	XCODE_CROSS_BASE="\$(cd \$(dirname "\$BASH_SOURCE") && pwd)"
+else
+	XCODE_CROSS_BASE="$PREFIX"
+fi
 export DEVELOPER_DIR="\$XCODE_CROSS_BASE/$DEVELOPER_DIR_REL"
 export LD_LIBRARY_PATH="\$XCODE_CROSS_BASE/$CCTOOLS_REL/lib"
 export PATH="\$XCODE_CROSS_BASE/bin:\$PATH:\$DEVELOPER_DIR/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:\$XCODE_CROSS_BASE/xcbuild/usr/bin:\$XCODE_CROSS_BASE/$CCTOOLS_REL/bin"
