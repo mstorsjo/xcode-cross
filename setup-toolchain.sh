@@ -75,9 +75,13 @@ if [ -z "\$TARGET_SET" ]; then
 	ARGS+=(-target x86_64-apple-darwin16)
 fi
 if [ -z "\$SYSROOT_SET" ]; then
-	# Is there a better way to find the default sdk?
 	SDKS=\$DEVELOPER_DIR/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
-	SDK=\$SDKS/\$(ls \$SDKS | grep MacOSX1 | head -1)
+	if [ -d \$SDKS/MacOSX.sdk ]; then
+		SDK=\$SDKS/MacOSX.sdk
+	else
+		# Is there a better way to find the default sdk?
+		SDK=\$SDKS/\$(ls \$SDKS | grep -E 'MacOSX[[:digit:]]' | head -1)
+	fi
 	ARGS+=(-isysroot \$SDK)
 fi
 export PATH=$CCTOOLS/bin:\$PATH
