@@ -120,5 +120,7 @@ VER=$(cd $CLANG/lib/clang && ls)
 # Link in the clang resource directory from the external installation into
 # this directory.
 ln -s $CLANG/lib/clang/$VER .
+# Ensure the lib directory exists in the compiler's tree
+mkdir -p $CLANG/lib/clang/$VER/lib
 # Provide the original libraries in the external clang's resource directory.
 ln -s $(pwd)/orig/lib/darwin $VER/lib
