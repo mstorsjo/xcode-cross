@@ -77,7 +77,7 @@ while [ \$# -gt 0 ]; do
 	fi
 done
 if [ -z "\$TARGET_SET" ]; then
-	ARGS+=(-target x86_64-apple-darwin16)
+	ARGS+=(-target arm64-apple-darwin16)
 fi
 if [ -z "\$SYSROOT_SET" ]; then
 	SDKS=\$DEVELOPER_DIR/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
