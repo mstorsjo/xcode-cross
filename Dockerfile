@@ -39,11 +39,24 @@ RUN set -x \
   && rm -rf apple-libtapi apple-libtapi-build
 
 RUN set -x \
+  && git clone https://github.com/tpoechtrager/apple-libdispatch \
+  && cd apple-libdispatch \
+  && git checkout 323b9b4e0ca05d6c56a0c2f2d7d8d47363e612b7 \
+  && cd .. \
+  && mkdir apple-libdispatch-build \
+  && cd apple-libdispatch-build \
+  && PATH=$BASE/clang/bin:$PATH cmake -G Ninja -DCMAKE_INSTALL_PREFIX=$BASE/cctools -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang ../apple-libdispatch \
+  && PATH=$BASE/clang/bin:$PATH ninja \
+  && ninja install \
+  && cd .. \
+  && rm -rf apple-libdispatch apple-libdispatch-build
+
+RUN set -x \
   && git clone https://github.com/tpoechtrager/cctools-port.git \
   && cd cctools-port \
-  && git checkout e101a6940dcb5988808a16626bc43851f00dc05f \
+  && git checkout 43c1635a2583a8b96ad76de53ca747c444c1e485 \
   && cd cctools \
-  && PATH=$BASE/clang/bin:$PATH ./configure --prefix=$BASE/cctools --with-libtapi=$BASE/cctools \
+  && PATH=$BASE/clang/bin:$PATH ./configure --prefix=$BASE/cctools --with-libtapi=$BASE/cctools --with-libblocksruntime=$BASE/cctools --with-libdispatch=$BASE/cctools \
   && PATH=$BASE/clang/bin:$PATH make -j$(nproc) \
   && make -j$(nproc) install \
   && cd ../.. \
