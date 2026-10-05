@@ -68,7 +68,7 @@ for sdk in iPhone Watch AppleTV XR; do
 		# Xcode 7.x and 8.x has got full frameworks for the simulator here,
 		# replace them with thin frameworks with TBD files for the target.
 		# Xcode 9 has got TBD files for the simulator as well.
-		# On Xcode 9/iOS 11 SDK, building for the simulatorh with header
+		# On Xcode 9/iOS 11 SDK, building for the simulator with header
 		# files taken from the target breaks.
 		rm -rf System
 		cp -a ../../../../$OS.platform/Developer/SDKs/$OS.sdk/System .
