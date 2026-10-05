@@ -38,6 +38,7 @@ cd Platforms
 cd MacOSX.platform
 rm -rf usr _CodeSignature
 cd Developer/SDKs/MacOSX*.*.*sdk
+rm -rf System/Library/PrivateFrameworks
 rm -rf usr/share
 cd ../../../..
 
