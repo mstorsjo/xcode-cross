@@ -42,9 +42,12 @@ rm -rf System/Library/PrivateFrameworks
 rm -rf usr/share
 cd ../../../..
 
-for sdk in iPhone Watch AppleTV; do
+for sdk in iPhone Watch AppleTV XR; do
 	OS=${sdk}OS
 	SIM=${sdk}Simulator
+	if [ ! -d $OS.platform ]; then
+		continue
+	fi
 	cd $OS.platform
 	rm -rf DeviceSupport usr _CodeSignature Developer/Library/CoreSimulator Library/Developer/CoreSimulator
 	cd ..
