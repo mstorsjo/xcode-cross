@@ -14,10 +14,19 @@ WORKDIR /opt
 RUN set -x \
   && mkdir -p $BASE \
   && cd $BASE \
-  && curl -LO https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.7/LLVM-19.1.7-Linux-X64.tar.xz \
-  && tar -Jxf LLVM-*.tar.xz \
-  && rm LLVM-*.tar.xz \
-  && mv LLVM-* clang \
+  && if [ "$(uname -m)" = "x86_64" ]; then \
+    curl -LO https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.7/LLVM-19.1.7-Linux-X64.tar.xz \
+    && tar -Jxf LLVM-*.tar.xz \
+    && rm LLVM-*.tar.xz \
+    && mv LLVM-* clang || exit 1; \
+  elif [ "$(uname -m)" = "aarch64" ]; then \
+    curl -LO https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.7/clang+llvm-19.1.7-aarch64-linux-gnu.tar.xz \
+    && tar -Jxf clang+llvm-*.tar.xz \
+    && rm clang+llvm-*.tar.xz \
+    && mv clang+llvm-* clang || exit 1; \
+  else \
+    echo "Unsupported architecture"; exit 1; \
+  fi \
   && cd clang \
   && mkdir bin-new \
   && mv bin/clang-19 bin/clang bin/clang++ bin/dsymutil bin/llvm-nm bin-new \
