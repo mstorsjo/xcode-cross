@@ -53,7 +53,7 @@ TOOL=\$(basename \$0 | sed 's/.*-\([^-]*\)/\1/')
 ARCH=\$(basename \$0 | sed 's/-.*//')
 case \$ARCH in
 i386|x86_64|arm*)
-	ARGS+=(-target \$ARCH-apple-darwin16)
+	ARGS+=(-target \$ARCH-apple-darwin)
 	TARGET_SET=1
 	;;
 *)
@@ -63,7 +63,7 @@ while [ \$# -gt 0 ]; do
 	a=\$1
 	if [ "\$a" = "-arch" ]; then
 		shift
-		ARGS+=(-target \$1-apple-darwin16 -arch \$1)
+		ARGS+=(-target \$1-apple-darwin -arch \$1)
 		TARGET_SET=1
 		shift
 	else
@@ -77,7 +77,7 @@ while [ \$# -gt 0 ]; do
 	fi
 done
 if [ -z "\$TARGET_SET" ]; then
-	ARGS+=(-target arm64-apple-darwin16)
+	ARGS+=(-target arm64-apple-darwin)
 fi
 if [ -z "\$SYSROOT_SET" ]; then
 	SDKS=\$DEVELOPER_DIR/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
