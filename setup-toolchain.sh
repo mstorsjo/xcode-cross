@@ -81,12 +81,8 @@ if [ -z "\$TARGET_SET" ]; then
 fi
 if [ -z "\$SYSROOT_SET" ]; then
 	SDKS=\$DEVELOPER_DIR/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
-	if [ -d \$SDKS/MacOSX.sdk ]; then
-		SDK=\$SDKS/MacOSX.sdk
-	else
-		# Is there a better way to find the default sdk?
-		SDK=\$SDKS/\$(ls \$SDKS | grep -E 'MacOSX[[:digit:]]' | head -1)
-	fi
+	# Is there a better way to find the default sdk?
+	SDK=\$SDKS/\$(ls \$SDKS | grep -E 'MacOSX[[:digit:]]' | head -1)
 	ARGS+=(-isysroot \$SDK)
 fi
 BASE="\$(dirname \$(readlink -f "\$0"))"
